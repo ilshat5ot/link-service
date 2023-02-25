@@ -1,0 +1,133 @@
+openapi: 3.0.2
+info: 
+  title: Сервис генерации коротких ссылок OpenAPI спецификация
+  version: 0.0.1
+servers: 
+  - url: http://localhost:8080/api/v1/
+    description: Dev server
+paths:
+  /short-link:
+    post:
+      summary: Метод получения короткой ссылки
+      tags:
+        - Controller
+      operationId: getShortLink
+      responses:
+        '200':
+          description: Успешный ответ с короткой ссылкой
+          content:
+            text:
+              schema:
+                type: string
+                description: Короткая ссылка
+                example: cGoLOOe.mg
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+  /{shortLink}:
+    get:
+      summary: Переход по короткой ссылке на ресурс
+      tags:
+        - Controller
+      operationId: redirectToFullLink
+      parameters: 
+        - name: shortLink
+          in: path
+          required: true
+          description: короткая ссылка
+          schema:
+            type: string
+          example: cGoLOOe.mg
+      responses: 
+        '200':
+          description: Успешный ответ переход на ресурс
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+    delete:
+      summary: удаление сущности Link в БД по короткой ссылке
+      tags:
+        - Controller
+      operationId: DeleteLinkForShortLink
+      parameters: 
+        - name: shortLink
+          in: path
+          required: true
+          description: короткая ссылка
+          schema:
+            type: string
+          example: cGoLOOe.mg
+      responses: 
+        '200':
+          description: Сущность Link в БД удалена
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+  /statistic/{shortLink}:
+    get:
+      summary: получение статистики по сущности Link
+      tags:
+        - Controller
+      operationId: getStatisticsForLink
+      parameters: 
+        - name: shortLink
+          in: path
+          required: true
+          description: короткая ссылка
+          schema:
+            type: string
+          example: cGoLOOe.mg
+      responses: 
+        '200':
+          description: Успешный ответ переход на ресурс
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Link"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+                
+components:
+  schemas:
+    Link:
+      type: object
+      required: 
+        - link_short
+        - link_full
+        - visits
+      properties:
+        short_link:
+          type: string
+          example: cGoLOOe.mg
+        full_link:
+          type: string
+          example: https://www.google.ru/
+        visits:
+          type: integer
+          example: 0
+    Error:
+      type: object
+      required: 
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

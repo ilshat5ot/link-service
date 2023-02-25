@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  shortlink-service:
+    image: shortlink-service
+    ports:
+    - 8080:8080
+    build:
+      context: .
+    container_name: shortlink-service
+    depends_on:
+      - postgresDB
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresDB:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  postgresDB:
+    image: postgres:14
+    ports:
+    - 5400:5432
+    container_name: postgresDB
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Postgres
