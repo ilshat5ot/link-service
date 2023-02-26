@@ -4,23 +4,17 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import ru.sadykov.link.exception.WrongLink;
+import org.springframework.test.context.ActiveProfiles;
+import ru.sadykov.link.exception.WrongLinkException;
 import ru.sadykov.link.repository.LinkRepository;
 import ru.sadykov.link.service.LinkService;
 
 import java.io.IOException;
 
-
-/**@SpringBootTest загрузит весь контекст нажего приложения. Скорее всего это не гуд
- * @TestConfiguration - можно поднять отдельные бины приложения для тестирования
- * когда стоит использовать мок заглушки вместо реализаций**/
-
 /**Тестирование приватных методов??? Как запустить модульные тесты отдельно от интеграционных?*/
 @SpringBootTest
+@ActiveProfiles("test")
 class LinkServiceImplTest {
-
-    /**Мы поднимаем реальные сущности а не заглушки?
-     * */
 
     private final LinkService linkService;
     private final LinkRepository linkRepository;
@@ -50,7 +44,7 @@ class LinkServiceImplTest {
 
     @Test
     void testCreateShortLinkNegative() {
-        Assertions.assertThrows(WrongLink.class,
+        Assertions.assertThrows(WrongLinkException.class,
                 () -> linkService.createShortLink(badLink));
     }
 
@@ -66,7 +60,7 @@ class LinkServiceImplTest {
 
     @Test
     void testDeleteLinkIfNotExists(){
-        Assertions.assertThrows(WrongLink.class,
+        Assertions.assertThrows(WrongLinkException.class,
                 () -> linkService.deleteLink(shortLink));
     }
 
@@ -77,7 +71,7 @@ class LinkServiceImplTest {
     /**Разобраться с аргументами метода assertThrows()*/
     @Test
     void getStatisticsIfNotExists() {
-        Assertions.assertThrows(WrongLink.class,
+        Assertions.assertThrows(WrongLinkException.class,
                 () -> linkService.getStatistics(shortLink));
     }
 

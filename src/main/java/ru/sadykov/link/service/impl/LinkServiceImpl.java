@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ru.sadykov.link.dto.LinkDto;
-import ru.sadykov.link.exception.WrongLink;
+import ru.sadykov.link.exception.LinkNotFoundException;
+import ru.sadykov.link.exception.WrongLinkException;
 import ru.sadykov.link.mapper.LinkMapper;
 import ru.sadykov.link.model.Link;
 import ru.sadykov.link.repository.LinkRepository;
@@ -21,7 +21,8 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class LinkServiceImpl implements LinkService{
+public class
+LinkServiceImpl implements LinkService{
 
     private final LinkRepository linkRepository;
     private final ShortLinkCreatorService shortLinkService;
@@ -41,13 +42,12 @@ public class LinkServiceImpl implements LinkService{
         }
         return shortLink;
     }
-    /**Разобраться с Throwble !!!!! Idea подставляет в лямбду Throwable  в возвращаемый тип
-     * который является чек исключение* */
+
     /**Хорошая ли практик пробрасывать исключение в контроллер?*/
     @Override
     @Transactional
     public void redirect(String shortLink, HttpServletResponse response) throws IOException {
-        Link link = linkRepository.findById(shortLink).orElseThrow(WrongLink::new);
+        Link link = linkRepository.findById(shortLink).orElseThrow(LinkNotFoundException::new);
         Integer visits = link.getVisits() + 1;
         linkRepository.updateVisit(visits, shortLink);
         String fullLink = link.getFullLink();
@@ -56,7 +56,7 @@ public class LinkServiceImpl implements LinkService{
 
     @Override
     public void deleteLink(String shortLink) {
-        linkRepository.findById(shortLink).orElseThrow(WrongLink::new);
+        linkRepository.findById(shortLink).orElseThrow(WrongLinkException::new);
         linkRepository.deleteById(shortLink);
     }
 
@@ -64,23 +64,22 @@ public class LinkServiceImpl implements LinkService{
     @Override
     public LinkDto getStatistics(String shortLink) {
         return linkMapper.linkToLinkDto(linkRepository.findById(shortLink)
-                .orElseThrow(WrongLink::new));
+                .orElseThrow(WrongLinkException::new));
     }
 
     private String generateShortLink(String fullLink) {
         return shortLinkService.convertFullLinkToShort(fullLink);
     }
 
-    /**Выбрасывает IllegalArgumentException если ввести набор символов
-     * URISyntaxException  - ываыhttps://www.google.com/*/
+    /**Подумать разобраться*/
     private void checkLink(String fullLink) {
         RestTemplate restTemplate = new RestTemplate();
         try{
             restTemplate.exchange(fullLink, HttpMethod.GET, null, String.class);
             System.out.println();
-        } catch (RestClientException e) {
+        } catch (RuntimeException e) {
             log.error("ссылка {} не работает!", fullLink);
-            throw new WrongLink();
+            throw new WrongLinkException(e.getMessage());
         }
     }
 }
