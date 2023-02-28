@@ -78,7 +78,8 @@ LinkServiceImpl implements LinkService{
             restTemplate.exchange(fullLink, HttpMethod.GET, null, String.class);
             System.out.println();
         } catch (RuntimeException e) {
-            log.error("ссылка {} не работает!", fullLink);
+            /**Теперь этот код можно вынести в эксепшен хендлер*/
+            //log.error("ссылка {} не работает!", fullLink);
             throw new WrongLinkException(e.getMessage());
         }
     }

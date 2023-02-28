@@ -11,7 +11,6 @@ import ru.sadykov.link.service.LinkService;
 
 import java.io.IOException;
 
-/**Тестирование приватных методов??? Как запустить модульные тесты отдельно от интеграционных?*/
 @SpringBootTest
 @ActiveProfiles("test")
 class LinkServiceImplTest {
@@ -48,10 +47,6 @@ class LinkServiceImplTest {
                 () -> linkService.createShortLink(badLink));
     }
 
-    /**
-     * Надо ли в тесте действие по созданию линка? А если его не будет @BeforeEch очистит БД.
-     * Есть ли метод кторый выполнит это действие для всех методов, которым это необходимо?
-     * */
     @Test
     void testDeleteLinkIfExists() {
         String shortLink = linkService.createShortLink(fullLink);
@@ -64,10 +59,6 @@ class LinkServiceImplTest {
                 () -> linkService.deleteLink(shortLink));
     }
 
-    /**Не понятно почему в аннонимном классе дергаем сервис, почему нельзя его дернуть напрямую
-     * Предпологаю что аннонимный класс является оберткой и в нем происходит проверка на
-     * выброшенный эксепшен.
-     * */
     /**Разобраться с аргументами метода assertThrows()*/
     @Test
     void getStatisticsIfNotExists() {
