@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  shortlink-service:
+  base-service:
     environment:
         SPRING_PROFILES_ACTIVE: docker
         DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
@@ -11,10 +11,18 @@ services:
     ports:
     - 8080:8080
     build:
-      context: .
+      context: link-base-service/
     container_name: shortlink-service
     depends_on:
       - postgresDB
+
+  auth-service:
+    image: auth-service
+    build:
+      context: link-authentication-service/
+    depends_on:
+      - postgresDB
+
   postgresDB:
     image: postgres:14
     container_name: postgresDB
