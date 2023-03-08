@@ -9,9 +9,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: Postgres
   liquibase:
     change-log: classpath:db.changelog-master.xml
     enabled: true
+
 jwt:
   sessionTime: 300_000
   secret: secret_key

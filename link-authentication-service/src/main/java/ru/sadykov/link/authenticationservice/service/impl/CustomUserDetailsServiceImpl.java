@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 /**Задача сервиса по имени пользователя педоставить самого юзера*/
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -27,6 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    //TODO уместел ли тут этот метод?
     public User findByUsername(String username) {
         return userRepository.findByUserName(username);
     }

@@ -1,4 +1,4 @@
-package ru.sadykov.link.authenticationservice.service;
+package ru.sadykov.link.authenticationservice.service.impl;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,12 +15,10 @@ public class JWTService {
     private static final String AUTHORITIES = "authorities";
 
     @Value("${jwt.secret}")
-    private String SECRET_KEY;
+    private String secretKey;
 
     @Value("${jwt.sessionTime}")
     private long sessionTime;
-
-
 
     public String createToken(UserDetails userDetails) {
 
@@ -29,7 +27,7 @@ public class JWTService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(expireTimeFromNow())
                 .claim(AUTHORITIES, userDetails.getAuthorities())
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
     private Date expireTimeFromNow() {

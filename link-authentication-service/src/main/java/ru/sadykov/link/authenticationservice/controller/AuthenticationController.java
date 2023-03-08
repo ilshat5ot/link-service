@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sadykov.link.authenticationservice.dto.AuthRequestDto;
 import ru.sadykov.link.authenticationservice.service.AuthenticationService;
 
 @RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -17,7 +19,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public String createAuthenticationToken(@RequestBody AuthRequestDto authRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(authRequest.getName(), authRequest.getPassword());
+                new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword());
         return authenticationService.authenticate(usernamePasswordAuthenticationToken);
     }
 }

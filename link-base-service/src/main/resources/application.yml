@@ -12,3 +12,5 @@ spring:
   liquibase:
     change-log: classpath:db.changelog-master.xml
     enabled: true
+jwt:
+  secret: secret_key

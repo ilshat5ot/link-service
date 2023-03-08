@@ -1,6 +1,6 @@
 package ru.sadykov.link.authenticationservice.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,15 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.sadykov.link.authenticationservice.service.impl.CustomUserDetailsService;
+import ru.sadykov.link.authenticationservice.service.impl.CustomUserDetailsServiceImpl;
 
 
 @Configuration
 @EnableWebSecurity(debug = true)
-public class SecurityConfig {
+@RequiredArgsConstructor
+public class AuthenticationConfig {
 
-    @Autowired
-    private CustomUserDetailsService userService;
+    private final CustomUserDetailsServiceImpl userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

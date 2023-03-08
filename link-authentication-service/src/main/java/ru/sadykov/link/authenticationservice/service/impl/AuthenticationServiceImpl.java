@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.sadykov.link.authenticationservice.service.AuthenticationService;
-import ru.sadykov.link.authenticationservice.service.JWTService;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +13,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsServiceImpl customUserDetailsService;
 
     @Override
     public String authenticate(UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {

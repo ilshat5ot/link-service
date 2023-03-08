@@ -24,7 +24,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="varchar(30)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="password" type="varchar(80)">
                 <constraints nullable="false"/>
