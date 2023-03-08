@@ -1,12 +1,14 @@
 package ru.sadykov.link.baseservice.service;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
+import ru.sadykov.link.baseservice.exception.exeptions.WrongLinkException;
 import ru.sadykov.link.common.repository.LinkRepository;
-import ru.sadykov.link.baseservice.exception.WrongLinkException;
 
 import java.io.IOException;
 

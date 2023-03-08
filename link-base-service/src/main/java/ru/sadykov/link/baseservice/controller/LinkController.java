@@ -1,11 +1,11 @@
 package ru.sadykov.link.baseservice.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.sadykov.link.baseservice.dto.LinkDto;
 import ru.sadykov.link.baseservice.service.LinkService;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -20,7 +20,7 @@ public class LinkController {
         return linkService.createShortLink(fullLink);
     }
 
-    @GetMapping ("/{shortLink}")
+    @GetMapping("/{shortLink}")
     public void redirectForFullLink(@PathVariable String shortLink, HttpServletResponse response) throws IOException {
         linkService.redirect(shortLink, response);
     }

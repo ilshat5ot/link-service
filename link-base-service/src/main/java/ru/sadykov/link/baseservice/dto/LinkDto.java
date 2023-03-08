@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class LinkDto {
 
-    private String  shortLink;
+    private String shortLink;
     private String fullLink;
     private Integer visits;
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   jpa:
     generate-ddl: false
@@ -10,5 +10,8 @@ spring:
         format_sql: true
     open-in-view: false
   liquibase:
-    change-log: classpath:db.changelog-master.yml
+    change-log: classpath:db.changelog-master.xml
     enabled: true
+jwt:
+  sessionTime: 300_000
+  secret: secret_key

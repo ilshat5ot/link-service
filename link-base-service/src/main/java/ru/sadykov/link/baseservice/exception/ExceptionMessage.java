@@ -9,7 +9,8 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ErrorMessage {
-    private String messageFromMyException;
-    private String messageFromException;
+public class ExceptionMessage {
+
+    private String generalMessage;
+    private String detailedMessage;
 }

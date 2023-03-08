@@ -1,4 +1,4 @@
-package ru.sadykov.link.baseservice.exception;
+package ru.sadykov.link.baseservice.exception.exeptions;
 
 import static ru.sadykov.link.baseservice.exception.Exceptions.WRONG_LINK_MESSAGE;
 

@@ -13,7 +13,7 @@ public class ShortLinkCreatorServiceImpl implements ShortLinkCreatorService {
         char[] shuffleChars = shuffleString(upChars, 0, ripperString.length - 1);
         String shortLink;
         if (shuffleChars.length > 10) {
-            shortLink = String.valueOf(shuffleChars).substring(0,9);
+            shortLink = String.valueOf(shuffleChars).substring(0, 9);
         } else {
             shortLink = String.valueOf(shuffleChars);
         }
@@ -21,7 +21,7 @@ public class ShortLinkCreatorServiceImpl implements ShortLinkCreatorService {
     }
 
     private char[] upChars(char[] chars) {
-        for (int i = 0; i < chars.length; i+=2) {
+        for (int i = 0; i < chars.length; i += 2) {
             chars[i] = Character.toUpperCase(chars[i]);
         }
         return chars;
@@ -30,7 +30,7 @@ public class ShortLinkCreatorServiceImpl implements ShortLinkCreatorService {
     private char[] ripperString(String fullLink) {
         String[] splitOne = fullLink.split("//");
         String[] splitTwo = splitOne[1].split("/");
-        String url =  splitTwo[0].substring(4);
+        String url = splitTwo[0].substring(4);
         return url.toCharArray();
     }
 

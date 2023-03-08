@@ -1,21 +1,21 @@
 package ru.sadykov.link.baseservice.service.impl;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.sadykov.link.common.model.Link;
+import ru.sadykov.link.common.entity.Link;
 import ru.sadykov.link.common.repository.LinkRepository;
 import ru.sadykov.link.baseservice.dto.LinkDto;
-import ru.sadykov.link.baseservice.exception.LinkNotFoundException;
-import ru.sadykov.link.baseservice.exception.WrongLinkException;
+import ru.sadykov.link.baseservice.exception.exeptions.LinkNotFoundException;
+import ru.sadykov.link.baseservice.exception.exeptions.WrongLinkException;
 import ru.sadykov.link.baseservice.mapper.LinkMapper;
 import ru.sadykov.link.baseservice.service.LinkService;
 import ru.sadykov.link.baseservice.service.ShortLinkCreatorService;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Service
@@ -32,6 +32,7 @@ LinkServiceImpl implements LinkService {
      * В постмане вылетает внутрення ошибка сервера пользователь не знает что конкретно не так?
      */
     @Override
+    @Transactional
     public String createShortLink(String fullLink) {
         checkLink(fullLink);
         String shortLink = generateShortLink(fullLink);
@@ -59,6 +60,7 @@ LinkServiceImpl implements LinkService {
     }
 
     @Override
+    @Transactional
     public void deleteLink(String shortLink) {
         linkRepository.findById(shortLink).orElseThrow(WrongLinkException::new);
         linkRepository.deleteById(shortLink);
@@ -68,6 +70,7 @@ LinkServiceImpl implements LinkService {
      * В постмане вылетает статус 500 без объяснений ошибки. Скорее всего это не правильно
      */
     @Override
+    @Transactional
     public LinkDto getStatistics(String shortLink) {
         return linkMapper.linkToLinkDto(linkRepository.findById(shortLink)
                 .orElseThrow(WrongLinkException::new));

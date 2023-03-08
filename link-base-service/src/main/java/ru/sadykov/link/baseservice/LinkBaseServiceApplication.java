@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"ru.sadykov.link.common.repository"})
-@EntityScan(basePackages = {"ru.sadykov.link.common.model"})
+@EntityScan(basePackages = {"ru.sadykov.link.common.entity"})
 public class LinkBaseServiceApplication {
 
     public static void main(String[] args) {

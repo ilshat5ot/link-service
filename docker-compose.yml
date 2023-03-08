@@ -29,3 +29,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Postgres
+      PGDATA: /data/postgres
+    volumes:
+    - db-volume:/data/postgres
+
+volumes:
+  db-volume:
+    name: db
+
