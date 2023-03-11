@@ -1,6 +1,6 @@
 package ru.sadykov.link.baseservice.exception.exeptions;
 
-import static ru.sadykov.link.baseservice.exception.Exceptions.WRONG_LINK_MESSAGE;
+import static ru.sadykov.link.baseservice.exception.exeptions.Exceptions.WRONG_LINK_MESSAGE;
 
 public class WrongLinkException extends RuntimeException{
 

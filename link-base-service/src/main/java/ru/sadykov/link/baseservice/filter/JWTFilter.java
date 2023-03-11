@@ -1,13 +1,14 @@
 package ru.sadykov.link.baseservice.filter;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,13 +38,10 @@ public class JWTFilter extends OncePerRequestFilter {
             logger.error("Header is not start with bearer");
             return;
         }
-
         String jwtToken = authorizationHeaderValue.replace(TOKEN_PREFIX, "");
-
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
         Claims body = claimsJws.getBody();
         List<Map<String, String>> authorities = (List<Map<String, String>>) body.get(AUTHORITIES);
-
         Set<SimpleGrantedAuthority> roles = authorities.stream().map(authority ->
                 new SimpleGrantedAuthority(authority.get("authority"))).collect(Collectors.toSet());
 

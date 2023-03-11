@@ -51,12 +51,16 @@ LinkServiceImpl implements LinkService {
      */
     @Override
     @Transactional
-    public void redirect(String shortLink, HttpServletResponse response) throws IOException {
+    public void redirect(String shortLink, HttpServletResponse response) {
         Link link = linkRepository.findById(shortLink).orElseThrow(LinkNotFoundException::new);
         Integer visits = link.getVisits() + 1;
         linkRepository.updateVisit(visits, shortLink);
         String fullLink = link.getFullLink();
-        response.sendRedirect(fullLink);
+        try {
+            response.sendRedirect(fullLink);
+        } catch (IOException e) {
+            throw new WrongLinkException(e.getMessage());
+        }
     }
 
     @Override

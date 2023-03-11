@@ -1,4 +1,4 @@
-package ru.sadykov.link.baseservice.exception;
+package ru.sadykov.link.baseservice.exception.exeptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
