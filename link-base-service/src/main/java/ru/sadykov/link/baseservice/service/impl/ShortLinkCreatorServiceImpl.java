@@ -30,7 +30,12 @@ public class ShortLinkCreatorServiceImpl implements ShortLinkCreatorService {
     private char[] ripperString(String fullLink) {
         String[] splitOne = fullLink.split("//");
         String[] splitTwo = splitOne[1].split("/");
-        String url = splitTwo[0].substring(4);
+        String url = null;
+        if (splitTwo[0].startsWith("www")){
+            url = splitTwo[0].substring(4);
+        } else {
+            url = splitTwo[0];
+        }
         return url.toCharArray();
     }
 

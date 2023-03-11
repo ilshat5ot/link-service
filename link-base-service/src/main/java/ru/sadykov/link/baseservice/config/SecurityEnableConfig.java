@@ -1,6 +1,7 @@
 package ru.sadykov.link.baseservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,7 +15,8 @@ import ru.sadykov.link.baseservice.filter.JWTFilter;
 @Configuration
 @EnableWebSecurity(debug = true)
 @EnableMethodSecurity
-public class LinkServiceConfig {
+@ConditionalOnProperty(value = "securityEnabled", havingValue = "true")
+public class SecurityEnableConfig {
 
     @Value("${jwt.secret}")
     private String secretKey;

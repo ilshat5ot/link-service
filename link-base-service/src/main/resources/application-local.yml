@@ -4,4 +4,4 @@ spring:
     username: postgres
     password: Postgres
 
-securityEnabled: true
+securityEnabled: false
